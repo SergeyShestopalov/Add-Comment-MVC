@@ -1,0 +1,105 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href='../public/css/style.css' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/css/app.css"/>
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+</head>
+<body class="body">
+
+<div class="mainSquare">
+    <div class="header"></div>
+
+    <div class="objectOne">
+        <div class="comment">
+            <table>
+                <tr><td>Name</td><td>Data</td><td>Comment</td><td>Add</td></tr>
+            </table>
+        </div>
+        <div class="commentAdd">
+            <form action="/session" method="post" name="comment-form" enctype="multipart/form-data">
+                <input type="hidden" name="formsubmitted" value="yes">
+                <input type="hidden" name="currentPicture" value="{{picture}}">
+                <input type="hidden" name="ID" value="{{ID}}">
+                Title:<br />
+                <input type="text" name="username" value="username" id="username" placeholder="username" required/><br />
+                Text:<br />
+                <textarea name="text" value="text" id="text" placeholder="text" required></textarea><br />
+                Picture:<br />
+                <input type="file" name="picture" /><br /><br />
+                Type:<br />
+                <select name="type">
+                    <option value="blog">blog</option>
+                    <option value="home">home</option>
+                    <option value="services">services</option>
+                    <option value="careers">careers</option>
+                    <option value="contacts">contacts</option>
+                </select><br /><br />
+                <input type="submit" value="submit" style="float: right"/>
+            </form>
+        </div>
+    </div>
+</div>
+
+</div>
+
+</body>
+</html>
+<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+<script>
+    $(document.forms['comment-form']).on('submit', function() {
+        var form = $(this);//объкт
+
+        /*      //можно и так
+         var email = document.getElementById('email');
+         var password = document.getElementById('password');*/
+        $.ajax({
+            url: "/session", //cсылка на которую отправится запрос
+            data: form.serialize(),//данные которые туда отправятся
+            type: "POST"
+        });
+        return false;
+    });
+</script>
+
+<!--<script>
+    $(function () {
+        var socket = io();
+        $('#formMsg').submit(function(){
+
+            socket.emit('chat message', $('#inputField').val());
+            $('#inputField').val('');
+        });
+
+        socket.on('chat message', function(msg){
+            var username = 'Petya';
+            var data = '23.12.12'
+            var postHeader  = '<div class="postHeader"><ul><li class="postHeaderUserName">'+username+'</li><li class="postHeaderUserData">'+data+'</li></ul></div>';
+            var postMassage = '<div class="postMassage">'+msg+'</div>';
+            var postFooter  = '<footer class="postFooter"><menu class="postFooterMenu"><ul><li class="postFooterList"><a href="#"><span class="postFooterText">Ответить</span></a></li></ul></menu></footer>';
+            var postBlock   = '<div class="postBlock">'+ postHeader + postMassage + postFooter+ '</div>';
+            //  var elemjq = '<div class="item" title="' + msg + '">' + msg + '</div>';
+            $('#messages').append(postBlock);
+
+            var elem = document.getElementById("chat");
+            elem.scrollTop = elem.scrollHeight;
+        });
+
+    });
+</script>
+<script>
+    $(document).ready(function () {
+
+        $('#formMsg').hover(function () {
+            $('#formMsg').append("<div id='array'></div>");
+        },function () {
+            $('#array').remove();
+        });
+    });
+</script>-->
